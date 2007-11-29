@@ -1,8 +1,6 @@
-require "templated_builder/templated_builder_methods.rb"
-require "templated_builder/templated_builder_methods_li.rb"
-require "templated_builder/templated_builder_methods_table.rb"
-require "templated_builder/static_templated_builder.rb"
-require "templated_builder/templated_builder.rb"
+for include_file in %w[../static_builder templated_builder_methods templated_builder_methods_li templated_builder_methods_table templated_builder static_templated_builder]
+  require File.join(File.dirname(__FILE__), "lib/templated_builder", "#{include_file}.rb")
+end
 
 %w[lib/bonus_form_helpers lib/specialized_helpers].each{|dir|
   Dir[File.join(File.dirname(__FILE__), dir, "*.rb")].each{|file|
@@ -11,4 +9,6 @@ require "templated_builder/templated_builder.rb"
 }
 
 UberBuilder = Builders::TemplatedBuilder
-StaticUberBuilder = Builders::TemplatedBuilder
+StaticUberBuilder = Builders::StaticTemplatedBuilder
+
+# set the default form builder to UberBuilder
