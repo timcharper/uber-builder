@@ -1,5 +1,5 @@
 module Builders
-  class TabularBuilder < ActionView::Helpers::FormBuilder
+  class TemplatedBuilder < ActionView::Helpers::FormBuilder
     include Builders::TabularBuilderMethods
   end
 end

@@ -1,5 +1,5 @@
 module Builders
-  class StaticTabularBuilder < Builders::StaticBuilder
+  class StaticTemplatedBuilder < Builders::StaticBuilder
     include Builders::TabularBuilderMethods
   end
 end
