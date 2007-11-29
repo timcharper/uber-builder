@@ -61,12 +61,6 @@ module Builders
       self.send("#{@builder_mode}_generic_field", fieldname, field, options)
     end
     
-    def file_column_field(field, options = {})
-      field = field.to_s
-      tabular_options = extract_tabular_options(field, options)
-      generic_field(field, @template.file_column_field(@object_name.to_s, field, options), tabular_options)
-    end
-    
     def table(html_options = {}, &block)
       raise "expected a block" unless block_given?
       content = with_mode("table") {capture(&block)}
