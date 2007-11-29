@@ -1,7 +1,14 @@
-require "builders/static_builder.rb"
-require "builders/static_tabular_builder.rb"
-require "builders/tabular_builder.rb"
-require "builders/tabular_builder_methods.rb"
-require "builders/form_helper_extensions.rb"
-require "templated.rb"
-require "static_templated.rb"
+require "templated_builder/templated_builder_methods.rb"
+require "templated_builder/templated_builder_methods_li.rb"
+require "templated_builder/templated_builder_methods_table.rb"
+require "templated_builder/static_templated_builder.rb"
+require "templated_builder/templated_builder.rb"
+
+%w[lib/bonus_form_helpers lib/specialized_helpers].each{|dir|
+  Dir[File.join(File.dirname(__FILE__), dir, "*.rb")].each{|file|
+    require file
+  }
+}
+
+UberBuilder = Builders::TemplatedBuilder
+StaticUberBuilder = Builders::TemplatedBuilder
