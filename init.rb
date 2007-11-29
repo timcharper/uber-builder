@@ -1,0 +1,7 @@
+require "builders/static_builder.rb"
+require "builders/static_tabular_builder.rb"
+require "builders/tabular_builder.rb"
+require "builders/tabular_builder_methods.rb"
+require "builders/form_helper_extensions.rb"
+require "templated.rb"
+require "static_templated.rb"
