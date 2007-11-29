@@ -54,15 +54,7 @@ class StaticBuilder
 #    MyHelper.new.check_box_tag "checkbox", :checked => self[method]?"true":"false", :readonly=>true
   end
   
-  def text_field(method, options = {})
-    value = self[method]
-    if options[:force].to_s=="whole_dollar"
-      @@helper.number_to_currency(value, :unit=>"")
-    else
-      value
-    end
-  end
-  
+
   def text_area(method, options = {})
     value = self[method]
     

@@ -9,6 +9,7 @@ end
 }
 
 TemplatedBuilder = Builders::TemplatedBuilder
-StaticTemplatedBuilder = Builders::StaticTemplatedBuilder
+StaticBuilder = Builders::StaticTemplatedBuilder
 
 # set the default form builder to UberBuilder
+ActionView::Base.default_form_builder = Builders::TemplatedBuilder
