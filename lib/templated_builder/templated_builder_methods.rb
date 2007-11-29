@@ -1,7 +1,7 @@
 module Builders
   module TemplatedBuilderMethods
-    include ActionView::Helpers::CaptureHelper
     include ActionView::Helpers::TextHelper
+    include ActionView::Helpers::CaptureHelper
     
     def initialize(*args)
       super

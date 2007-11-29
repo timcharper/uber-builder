@@ -14,8 +14,7 @@ module Builders
       time_field = options.delete(:time) ? true : false
       options[:format]||="%B %d, %Y"+ (time_field ? " %I:%M %p" : '')
       
-      value = object.send(method).strftime(options[:format]) rescue ""
-      
+      object.send(method).strftime(options[:format]) rescue ""
     end
   end
 end

@@ -8,7 +8,7 @@ end
   }
 }
 
-UberBuilder = Builders::TemplatedBuilder
-StaticUberBuilder = Builders::StaticTemplatedBuilder
+TemplatedBuilder = Builders::TemplatedBuilder
+StaticTemplatedBuilder = Builders::StaticTemplatedBuilder
 
 # set the default form builder to UberBuilder
