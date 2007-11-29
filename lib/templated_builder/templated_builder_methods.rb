@@ -111,7 +111,7 @@ module Builders
     end
     
     def with_mode(mode, &block)
-      last_mode, @builder_mode = @builder_mode, "table"
+      last_mode, @builder_mode = @builder_mode, mode
       return_value = yield
       @builder_mode = last_mode
       return_value
