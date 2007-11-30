@@ -10,7 +10,7 @@ module Builders
       @bypass_for_block = false
     end
     
-    ( ActionView::Helpers::FormBuilder.field_helpers - %w(check_box radio_button hidden_field) + %w(time_select)).each do |selector| 
+    ( ActionView::Helpers::FormBuilder.field_helpers - %w(check_box radio_button radio_button_list hidden_field) + %w(time_select)).each do |selector| 
       class_eval <<-END_SRC, __FILE__, __LINE__ 
         def #{selector}(field, options = {})
           field = field.to_s

@@ -23,6 +23,7 @@ module ActionView
       def radio_button_list(method, choices, options = {})
         @template.radio_button_list(@object_name, method, choices, options.merge(:object => @object))
       end
+      self.field_helpers << :currency_field
     end
   end
 end
