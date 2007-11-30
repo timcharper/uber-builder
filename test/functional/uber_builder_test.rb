@@ -1,15 +1,4 @@
 require File.dirname(__FILE__) + "/../test_helper.rb"
-require 'ostruct'
-
-module CaptureStubMethods
-  def capture(&block)
-    yield
-  end
-  def concat(text, *args)
-    @concat_output||=""
-    @concat_output << text.to_s
-  end
-end
 
 class UberBuilderTest < Test::Unit::TestCase
   def setup
@@ -51,7 +40,7 @@ class UberBuilderTest < Test::Unit::TestCase
     @record.balance = 123.345
     values = values_from(@builder.currency_field(:balance))
     
-    assert_equal("123.345", values[0])
+    assert_equal("123.35", values[0])
     assert_equal("$123.35", values[1])
     
     @record.int_balance = 1234
@@ -64,12 +53,12 @@ class UberBuilderTest < Test::Unit::TestCase
   def test__number__retrieves_defaults_from_model
     @record.age = 1234
     values = values_from(@builder.number_field(:age))
-    assert_equal("1234.0", values[0])
+    assert_equal("1234", values[0])
     assert_equal("1,234", values[1])
     
     @record.long = 1234.12345
     values = values_from(@builder.number_field(:long))
-    assert_equal("1234.12345", values[0])
+    assert_equal("1234.123", values[0])
     assert_equal("1,234.123", values[1])
     
   end
@@ -80,10 +69,10 @@ class UberBuilderTest < Test::Unit::TestCase
     assert_equal(["1000000000000.123456789", "1,000,000,000,000.123456789"], values)
     
     values = values_from(@builder.number_field(:value, :precision => 2))
-    assert_equal(["1000000000000.123456789", "1,000,000,000,000.12"], values)
+    assert_equal(["1000000000000.12", "1,000,000,000,000.12"], values)
     
     values = values_from(@builder.number_field(:value, :precision => 0))
-    assert_equal(["1000000000000.123456789", "1,000,000,000,000"], values)
+    assert_equal(["1000000000000", "1,000,000,000,000"], values)
   end
   
   def test__currency_field
