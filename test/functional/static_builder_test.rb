@@ -70,4 +70,18 @@ class StaticBuilderTest < Test::Unit::TestCase
     assert_equal("Y1.000,25", output)
   end
   
+  def test__currency__nil_value__returns_nothing
+    @record.value = nil
+    assert_equal("", @builder.currency_field(:value, :unit => "$", :delimiter => ",", :separator => ".", :precision => 2))
+    @record.balance = nil
+    assert_equal("", @builder.currency_field(:balance, :unit => "$", :delimiter => ",", :separator => ".", :precision => 2))
+  end
+  
+  def test__number__nil_value__returns_nothing
+    @record.value = nil
+    assert_equal("", @builder.number_field(:value, :precision => 2))
+    @record.balance = nil
+    assert_equal("", @builder.number_field(:balance, :precision => 2))
+  end
+  
 end

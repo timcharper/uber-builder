@@ -22,6 +22,7 @@ protected
   end
   
   def apply_precision_and_delimiter(str_value, number_options)
+    return "" if str_value.blank?
     parts = apply_precision(str_value, number_options).split(".")
     
     parts[0] = number_with_delimiter(parts[0], number_options[:delimiter])

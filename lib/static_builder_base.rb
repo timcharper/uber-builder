@@ -57,12 +57,14 @@ class StaticBuilderBase
   
   def currency_field(method, options = {})
     currency_options = extract_number_field_options(options.stringify_keys, column_type(method), column_scale(method))
-    number_to_currency(self[method], currency_options)
+    number_to_currency(self[method], currency_options).to_s
   end
   
   def number_field(method, options = {})
     number_options = extract_number_field_options(options.stringify_keys, column_type(method), column_scale(method))
-    apply_precision_and_delimiter(BigDecimal(self[method].to_s).to_s, number_options)
+    value = self[method].to_s
+    value = BigDecimal(value).to_s unless value.blank?
+    apply_precision_and_delimiter(value, number_options).to_s
   end
   
   def object
