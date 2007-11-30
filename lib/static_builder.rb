@@ -1,13 +1,6 @@
 class StaticBuilder
   attr_accessor :object_name, :object, :options
 
-  class MyHelper
-    include ActionView::Helpers::NumberHelper
-    include ActionView::Helpers
-  end
-  
-  @@helper=MyHelper.new
-  
   def initialize(object_name, object, template, options, proc)
     @object_name, @object, @template, @options, @proc = object_name, object, template, options, proc        
   end

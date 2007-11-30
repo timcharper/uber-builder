@@ -2,7 +2,7 @@ for include_file in %w[../static_builder templated_builder_methods templated_bui
   require File.join(File.dirname(__FILE__), "lib/templated_builder", "#{include_file}.rb")
 end
 
-%w[lib/bonus_form_helpers lib/specialized_helpers].each{|dir|
+%w[lib/overrides lib/bonus_form_helpers lib/3rd_party_helpers].each{|dir|
   Dir[File.join(File.dirname(__FILE__), dir, "*.rb")].each{|file|
     require file
   }
