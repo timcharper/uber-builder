@@ -82,6 +82,11 @@ class UberBuilderTest < Test::Unit::TestCase
     assert_match("Y1.000,25", output)
   end
   
+  def test__to_static__should_convert
+    @static_builder = @builder.to_static
+    assert_equal("Tim Harper", @static_builder.text_field(:first_name))
+  end
+  
 protected
   def values_from(output)
     output.scan(/value="([^"]*)"/).map(&:first)

@@ -1,4 +1,4 @@
-class StaticBuilder
+class StaticBuilderBase
   attr_accessor :object_name, :object
   include NumberFieldHelpers
 

@@ -1,5 +1,5 @@
 module Builders
-  class StaticTemplatedBuilder < StaticBuilder
+  class StaticTemplatedBuilder < StaticBuilderBase
     include Builders::TemplatedBuilderMethods
   end
 end
