@@ -6,7 +6,7 @@ class UberBuilderTest < Test::Unit::TestCase
     @record = MockModel.new(:first_name => "Tim Harper", :balance => 1000.25, :age => 25, :long => 41.234, :lat => 40.123)
     @template.instance_variable_set("@record", @record)
     
-    @builder = TemplatedBuilder.new(:record, nil, @template, {}, lambda {})
+    @builder = Builders::TemplatedBuilder.new(:record, nil, @template, {}, lambda {})
     @builder.extend CaptureStubMethods
   end
   

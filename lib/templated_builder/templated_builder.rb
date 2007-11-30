@@ -1,5 +1,3 @@
-module Builders
-  class TemplatedBuilder < ActionView::Helpers::FormBuilder
-    include Builders::TemplatedBuilderMethods
-  end
+class Builders::TemplatedBuilder < ActionView::Helpers::FormBuilder
+  include Builders::TemplatedBuilderMethods
 end

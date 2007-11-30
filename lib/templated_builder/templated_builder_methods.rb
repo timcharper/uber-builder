@@ -96,7 +96,7 @@ module Builders
     end
     
     def to_static
-      self.to(Builders::StaticTemplatedBuilder)
+      self.to(Builders::StaticBuilder)
     end
     
   protected
