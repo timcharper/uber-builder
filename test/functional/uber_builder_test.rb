@@ -87,6 +87,19 @@ class UberBuilderTest < Test::Unit::TestCase
     assert_equal("Tim Harper", @static_builder.text_field(:first_name))
   end
   
+  def test__currency__nil_value__returns_nothing
+    @record.value = nil
+    assert_equal(["", ""], values_from(@builder.currency_field(:value, :unit => "$", :delimiter => ",", :separator => ".", :precision => 2)))
+    @record.balance = nil
+    assert_equal(["", ""], values_from(@builder.currency_field(:balance, :unit => "$", :delimiter => ",", :separator => ".", :precision => 2)))
+  end
+  
+  def test__number__nil_value__returns_nothing
+    @record.value = nil
+    assert_equal(["", ""], values_from(@builder.number_field(:value, :precision => 2)))
+    @record.balance = nil
+    assert_equal(["", ""], values_from(@builder.number_field(:balance, :precision => 2)))
+  end
 protected
   def values_from(output)
     output.scan(/value="([^"]*)"/).map(&:first)

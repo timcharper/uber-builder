@@ -30,7 +30,9 @@ class ActionView::Helpers::InstanceTag
     options.delete("size")
     options["type"] = field_type
 
-    str_value = BigDecimal(value_before_type_cast(object).to_s).to_s
+    str_value = value_before_type_cast(object).to_s
+    str_value = BigDecimal(str_value).to_s unless str_value.blank?
+    
     options["value"] ||= apply_precision_and_delimiter(str_value, number_options)
     
     options["onchange"] = "$(this).previous().value = $F(this).replace(/[#{number_options[:delimiter]}#{number_options[:unit]}]/g, '').replace('#{number_options[:separator]}', '.'); " + options[:onchange].to_s
