@@ -1,0 +1,56 @@
+h1. Uber builder
+
+The greatest form builder for Ruby on Rails.
+
+h2. Why is it great?
+
+ * Tabular forms
+ * DD/DL forms
+ * Easily extensible
+ * Comes with a few useful extensions already
+ * Comes with a FormBuilder compliant StaticBuilder to render any form built with it as static.
+
+h2. How do I harness this greatness?
+
+To create a basic form:
+<pre><code>
+<%= form_for @user do |f| %>
+  <h2>User details</h2>
+  <%= f.table do %>
+    <%= f.manual :label => "Name" do %>
+      <%= f.text_field :first_name %>
+      <%= f.text_field :last_name %>
+    <% end %>
+    <%= f.text_field :age %>
+  <% end %>
+  
+  <h2>Billing information</h2>
+  <%= f.table do %>
+    <%= f.text_field :address %>
+    ... etc.
+  <% end %>
+<% end %>
+</code></pre>
+
+If you extract that to a partial, <code>_form.html.erb</code>, then you could use if as a static view or a form
+
+<pre><code>
+# render it as a form
+<%= form_for @user do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end %>
+
+# render it as static
+<%= form_for @user, :builder => StaticBuilder do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end %>
+</code></pre>
+
+h2. I want to submit a patch
+
+# Fork Uber-Builder
+# Make your modification
+# Add tests!
+# Make sure all existing tests pass
+# Send me a pull request on github
+
