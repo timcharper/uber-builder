@@ -5,7 +5,7 @@ The greatest form builder for Ruby on Rails.
 h2. Why is it great?
 
  * Tabular forms
- * DD/DL forms
+ * ul / li css forms
  * Easily extensible
  * Comes with a few useful extensions already
  * Comes with a FormBuilder compliant StaticBuilder to render any form built with it as static.
@@ -32,6 +32,31 @@ To create a basic form:
 <% end %>
 </code></pre>
 
+This form, out of the box, will be rendered as a table (with a class of form).  To make the labels line up, you'll want to add some CSS:
+
+<pre><code>
+table.form td.label {
+  display:block;
+  width:200px;
+  font-weight:bold;
+}
+</code></pre>
+
+You can also render ul / li like so:
+
+<pre><code>
+<%= form_for @user do |f| %>
+  <h2>User details</h2>
+  <%= f.ul do %>
+    ...
+  <% end %>
+<% end %>
+</code></pre>
+
+The ul is rendered with a class of "form".  You'll need to add css styling to make it work.  Good luck with that.
+
+h2. Buy one get one free
+
 If you extract that to a partial, <code>_form.html.erb</code>, then you could use if as a static view or a form
 
 <pre><code>
@@ -54,3 +79,10 @@ h2. I want to submit a patch
 # Make sure all existing tests pass
 # Send me a pull request on github
 
+h2. Author
+
+"Tim Harper":http://tim.theenchanter.com/
+
+h2. Credits
+
+Graeme Mathieson for writing the original "TabularFormBuilder":http://woss.name/2006/07/13/tabular-formbuilder-for-easily-creating-forms-in-rails/, which I used as a starting point for UberBuilder
