@@ -15,4 +15,4 @@ require_whole_directory("lib/3rd_party_helpers")
 
 # set the default form builder to UberBuilder
 ActionView::Base.default_form_builder = Builders::TemplatedBuilder
-ActionView::Base.send :include, Builders
+ActionView::Base::CompiledTemplates::StaticBuilder = Builders::StaticBuilder # for convienent access
