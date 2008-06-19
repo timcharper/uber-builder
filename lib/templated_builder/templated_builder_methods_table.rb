@@ -39,7 +39,7 @@ module Builders
     end
     
     def table_label(text, for_field, after = false)
-      @template.content_tag 'label', "#{text}#{after ? '' : ':'}", :for => for_field
+      @template.content_tag('label', text, :for => for_field) + (after ? '' : ':')
     end
     
   end
