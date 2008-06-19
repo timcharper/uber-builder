@@ -99,6 +99,10 @@ module Builders
       self.to(Builders::StaticBuilder)
     end
     
+    def static?
+      is_a?(Builders::StaticBuilder)
+    end
+    
   protected
     def extract_tabular_options(field, options)
       {
