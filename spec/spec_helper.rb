@@ -1,4 +1,4 @@
-require "test/unit"
+require 'spec'
 require "rubygems"
 require 'active_support'
 require "actionpack"
@@ -6,9 +6,11 @@ require "action_controller"
 require "action_view"
 require "ostruct"
 
-def dbg; require 'ruby-debug'; debugger; end
 require File.dirname(__FILE__) + "/../init.rb"
 require File.dirname(__FILE__) + "/mock_model.rb"
+
+Spec::Runner.configure do |config|
+end
 
 module CaptureStubMethods
   def capture(&block)
