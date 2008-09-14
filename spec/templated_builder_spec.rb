@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + "/spec_helper.rb"
 
-describe "UberBuilder" do
+describe UberBuilder::TemplatedBuilder do
   before(:each) do
     @template = ActionView::Base.new
     @record = MockModel.new(:first_name => "Tim Harper", :balance => 1000.25, :age => 25, :long => 41.234, :lat => 40.123)
     @template.instance_variable_set("@record", @record)
     
-    @builder = Builders::TemplatedBuilder.new(:record, nil, @template, {}, lambda {})
+    @builder = UberBuilder::TemplatedBuilder.new(:record, nil, @template, {}, lambda {})
     @builder.extend CaptureStubMethods
   end
   
@@ -21,7 +21,19 @@ describe "UberBuilder" do
     @static_builder.text_field(:first_name).should == "Tim Harper"
   end
   
-  describe "tables" do
+  describe "p layout" do
+    it "should should output p and label" do
+      output = @builder.p {
+        @builder.text_field(:first_name)
+      }
+      output.should include('<p>')
+      output.should include('<label for="record_first_name">First name:</label><br />')
+      output.should include(%!<input id="record_first_name" name="record[first_name]" size="30" type="text" value="Tim Harper" />!)
+      output.should include('</p>')
+    end
+  end
+  
+  describe "table layout" do
     it "should should output table and label" do
       output = @builder.table {
         @builder.text_field(:first_name)
@@ -33,7 +45,7 @@ describe "UberBuilder" do
     end
   end
   
-  describe "ul" do
+  describe "ul layout" do
     it "should should output ul and label" do
       output = @builder.ul {
         @builder.text_field(:first_name)

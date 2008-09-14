@@ -1,5 +1,5 @@
-module Builders
-  module TemplatedBuilderMethods
+module UberBuilder
+  module Methods
     
     def calendar_date_select(field, options = {})
       field = field.to_s

@@ -1,4 +1,4 @@
-class StaticBuilderBase
+class UberBuilder::StaticBuilder
   attr_accessor :object_name, :object
   include NumberFieldHelpers
 
@@ -97,4 +97,7 @@ protected
     ci = column_info(column)
     ci && ci.scale
   end
+  
+public
+  include UberBuilder::TemplatedMethods
 end

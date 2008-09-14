@@ -1,12 +1,12 @@
-module Builders
-  module TemplatedBuilderMethods
+module UberBuilder
+  module TemplatedMethods
     include ActionView::Helpers::TextHelper
     include ActionView::Helpers::CaptureHelper
     
     def initialize(*args)
       super
       
-      @builder_mode = nil
+      @layout = nil
       @bypass_for_block = false
     end
     
@@ -55,30 +55,22 @@ module Builders
       generic_field(field, super, tabular_options )
     end
     
-    def generic_field(fieldname, field, options = {})
-      return field if @builder_mode.nil?
+    def generic_field(fieldname, field_content, options = {})
+      return field_content if @layout.nil? || @bypass_for_block
       
-      self.send("#{@builder_mode}_generic_field", fieldname, field, options)
-    end
-    
-    def table(html_options = {}, &block)
-      raise "expected a block" unless block_given?
-      content = with_mode("table") {capture(&block)}
+      field_content = options[:prefix] + field.to_s if options[:prefix]
+      field_content = field.to_s + options[:suffix] if options[:suffix]
       
-      concat( @template.content_tag(:table, content, {:class => "form"}.merge(html_options)), block.binding )
-    end
-    
-    def ul(html_options = {}, &block)
-      raise "expected a block" unless block_given?
-      content = with_mode("li") {capture(&block)}
+      label_text = options[:label_text]
+      label_text = "*#{label_text}" if options[:required]
       
-      concat( @template.content_tag(:ul, content, {:class => "form"}.merge(html_options)), block.binding )
+      @layout.field(fieldname, field_content, label_text, options)
     end
     
     def manual(options = {}, &block)
       raise "manual expects a block" unless block_given?
       
-      content = with_mode(nil) {capture(&block)}
+      content = with_layout(nil) {capture(&block)}
       tabular_options = extract_tabular_options( "", options )
       
       concat( generic_field("", content, tabular_options), block.binding)
@@ -96,11 +88,22 @@ module Builders
     end
     
     def to_static
-      self.to(Builders::StaticBuilder)
+      self.to(UberBuilder::StaticBuilder)
     end
     
     def static?
-      is_a?(Builders::StaticBuilder)
+      is_a?(UberBuilder::StaticBuilder)
+    end
+    
+    UberBuilder::Layouts.constants.each do |layout|
+      class_eval <<-EOF
+        def #{layout.downcase}(html_options = {}, &block)
+          raise "expected a block" unless block_given?
+          layout = UberBuilder::Layouts::#{layout}.new(@template, @object_name, self)
+          content = with_layout(layout) { capture(&block) }
+          concat( layout.section(content, html_options), block.binding )
+        end
+      EOF
     end
     
   protected
@@ -114,10 +117,10 @@ module Builders
       }
     end
     
-    def with_mode(mode, &block)
-      last_mode, @builder_mode = @builder_mode, mode
+    def with_layout(layout, &block)
+      last_layout, @layout = @layout, layout
       return_value = yield
-      @builder_mode = last_mode
+      @layout = last_layout
       return_value
     end
   end

@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + "/spec_helper.rb"
 
-describe Builders::StaticBuilder do
+describe UberBuilder::StaticBuilder do
   before(:each) do
     @template = ActionView::Base.new
     @record = MockModel.new(:first_name => "Tim Harper", :balance => 1000.25, :age => 25, :long => 41.234, :lat => 40.123)
     @template.instance_variable_set("@record", @record)
     
-    @builder = Builders::StaticBuilder.new(:record, nil, @template, {}, lambda {})
+    @builder = UberBuilder::StaticBuilder.new(:record, nil, @template, {}, lambda {})
     @builder.extend CaptureStubMethods
   end
   

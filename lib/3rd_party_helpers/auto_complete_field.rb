@@ -1,5 +1,5 @@
-module Builders
-  module TemplatedBuilderMethods
+module UberBuilder
+  module Methods
     def auto_complete_text_field(field, options = {})
       url = options.delete(:url)
       field_id = options[:id] || "#{self.object_name}_#{field}"
