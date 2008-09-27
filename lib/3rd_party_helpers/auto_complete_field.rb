@@ -1,5 +1,12 @@
 module UberBuilder
-  module Methods
+  class StaticBuilder
+    def auto_complete_text_field(field, options = {})
+      options.delete(:url)
+      text_field(field, options)
+    end
+  end
+  
+  module TemplatedMethods
     def auto_complete_text_field(field, options = {})
       url = options.delete(:url)
       field_id = options[:id] || "#{self.object_name}_#{field}"
@@ -15,13 +22,6 @@ module UberBuilder
         :url => url,
         :indicator => "#{field_id}_indicator")
       generic_field(field, output, tabular_options )
-    end
-  end
-  
-  class StaticBuilder
-    def auto_complete_text_field(field, options = {})
-      options.delete(:url)
-      text_field(field, options)
     end
   end
 end
