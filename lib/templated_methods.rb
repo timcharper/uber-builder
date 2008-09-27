@@ -95,25 +95,39 @@ module UberBuilder
       is_a?(UberBuilder::StaticBuilder)
     end
     
-    UberBuilder::Layouts.constants.each do |layout|
-      class_eval <<-EOF
-        def #{layout.downcase}(html_options = {}, &block)
-          raise "expected a block" unless block_given?
-          layout = UberBuilder::Layouts::#{layout}.new(@template, @object_name, self)
-          content = with_layout(layout) { capture(&block) }
-          concat( layout.section(content, html_options), block.binding )
-        end
-      EOF
+    def respond_to?(method, include_private = false)
+      super || define_layout_method(method)
+    end
+    
+    def method_missing(method, *args, &block)
+      respond_to?(method) ? send(method, *args, &block) : super
     end
     
   protected
+    def define_layout_method(method)
+      const_name = method.to_s.classify
+      return false unless UberBuilder::Layouts.const_defined?(const_name)
+      
+      self.class.class_eval <<-EOF
+        def #{method}(html_options = {}, &block)
+          raise "expected a block" unless block_given?
+          layout = UberBuilder::Layouts::#{const_name}.new(@template, @object_name, self)
+          content = with_layout(layout) { capture(&block) }
+          concat( layout.section(content, html_options), block.binding )
+        end
+        
+        public :#{method}
+      EOF
+      true
+    end
+    
     def extract_tabular_options(field, options)
       {
         :label_text => options.delete(:label) || field.to_s.humanize,
         :required => options.delete(:required) || false,
         :prefix => options.delete(:prefix),
         :suffix => options.delete(:suffix),
-        :row => options.delete(:row)
+        :outer => options.delete(:outer)
       }
     end
     
