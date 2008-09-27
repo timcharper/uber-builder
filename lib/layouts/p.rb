@@ -15,8 +15,8 @@ module UberBuilder
         return li(field_content) if label_text.blank?
         
         p(
-          label(label_text, "#{@object_name}_#{field_name}") + "<br />\n" +
-          field_content
+          label(label_text, "#{@object_name}_#{field_name}") + "<br />\n" +field_content,
+          options[:outer]
         ) + "\n"
       end
     

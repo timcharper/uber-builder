@@ -10,13 +10,13 @@ module UberBuilder
         
         if options[:label] == :after
           li(
-            label('') + 
-            field_content + " " + li_label(label_text, "#{@object_name}_#{field_name}", true) 
+            label('') + field_content + " " + li_label(label_text, "#{@object_name}_#{field_name}", true),
+            options[:outer]
           )
         else
           li(
-            label(label_text, "#{@object_name}_#{field_name}") +
-            field_content
+            label(label_text, "#{@object_name}_#{field_name}") + field_content,
+            options[:outer]
           ) 
         end
       end
