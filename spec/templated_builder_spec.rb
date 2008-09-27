@@ -10,7 +10,7 @@ describe UberBuilder::TemplatedBuilder do
     @builder.extend CaptureStubMethods
   end
   
-  it "should should output element outside of table" do
+  it "should output element outside of table" do
     output = @builder.text_field(:first_name)
     
     output.should == %!<input id="record_first_name" name="record[first_name]" size="30" type="text" value="Tim Harper" />!
@@ -22,7 +22,7 @@ describe UberBuilder::TemplatedBuilder do
   end
   
   describe "p layout" do
-    it "should should output p and label" do
+    it "should output p and label" do
       output = @builder.p {
         @builder.text_field(:first_name)
       }
@@ -33,8 +33,27 @@ describe UberBuilder::TemplatedBuilder do
     end
   end
   
+  describe "div layout" do
+    it "should output div and label" do
+      output = @builder.div {
+        @builder.text_field(:first_name)
+      }
+      output.should include('<div>')
+      output.should include('<label for="record_first_name">First name:</label><br />')
+      output.should include(%!<input id="record_first_name" name="record[first_name]" size="30" type="text" value="Tim Harper" />!)
+      output.should include('</div>')
+    end
+    
+    it "should receive :div_options" do
+      output = @builder.div {
+        @builder.text_field(:first_name, :div_options => {:class => "hello"})
+      }
+      output.should include('<div class="hello">')
+    end
+  end
+  
   describe "table layout" do
-    it "should should output table and label" do
+    it "should output table and label" do
       output = @builder.table {
         @builder.text_field(:first_name)
       }
@@ -46,7 +65,7 @@ describe UberBuilder::TemplatedBuilder do
   end
   
   describe "ul layout" do
-    it "should should output ul and label" do
+    it "should output ul and label" do
       output = @builder.ul {
         @builder.text_field(:first_name)
       }

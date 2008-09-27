@@ -7,7 +7,7 @@ end
 require_whole_directory("lib/extensions")
 require_whole_directory("lib/bonus_form_helpers")
 
-for include_file in %w[layouts/p layouts/ul layouts/table templated_methods templated_builder static_builder]
+for include_file in %w[layouts/p layouts/div layouts/ul layouts/table templated_methods templated_builder static_builder]
   require File.join(File.dirname(__FILE__), "lib", "#{include_file}.rb")
 end
 
