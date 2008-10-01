@@ -14,10 +14,10 @@ h2. How do I harness this greatness?
 
 To create a basic form:
 <pre><code>
-<%= form_for @user do |f| %>
+<% form_for @user do |f| %>
   <h2>User details</h2>
-  <%= f.table do %>
-    <%= f.manual :label => "Name" do %>
+  <% f.table do %>
+    <% f.manual :label => "Name" do %>
       <%= f.text_field :first_name %>
       <%= f.text_field :last_name %>
     <% end %>
@@ -25,7 +25,7 @@ To create a basic form:
   <% end %>
   
   <h2>Billing information</h2>
-  <%= f.table do %>
+  <% f.table do %>
     <%= f.text_field :address %>
     ... etc.
   <% end %>
@@ -45,9 +45,9 @@ table.form td.label {
 You can also render ul / li like so:
 
 <pre><code>
-<%= form_for @user do |f| %>
+<% form_for @user do |f| %>
   <h2>User details</h2>
-  <%= f.ul do %>
+  <% f.ul do %>
     ...
   <% end %>
 <% end %>
@@ -61,12 +61,12 @@ If you extract that to a partial, <code>_form.html.erb</code>, then you could us
 
 <pre><code>
 # render it as a form
-<%= form_for @user do |f| %>
+<% form_for @user do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
 <% end %>
 
 # render it as static
-<%= form_for @user, :builder => StaticBuilder do |f| %>
+<% form_for @user, :builder => StaticBuilder do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
 <% end %>
 </code></pre>
