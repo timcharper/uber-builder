@@ -12,7 +12,7 @@ module UberBuilder
       end
       
       def field(field_name, field_content, label_text, options = {})
-        return li(field_content) if label_text.blank?
+        return p(field_content) if label_text.blank?
         
         p(
           label(label_text, "#{@object_name}_#{field_name}") + "<br />\n" +field_content,
