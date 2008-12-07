@@ -58,8 +58,8 @@ module UberBuilder
     def generic_field(fieldname, field_content, options = {})
       return field_content if @layout.nil? || @bypass_for_block
       
-      field_content = options[:prefix] + field.to_s if options[:prefix]
-      field_content = field.to_s + options[:suffix] if options[:suffix]
+      field_content = options[:prefix] + field_content.to_s if options[:prefix]
+      field_content = field_content.to_s + options[:suffix] if options[:suffix]
       
       label_text = options[:label_text]
       label_text = "*#{label_text}" if options[:required]
