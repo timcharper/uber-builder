@@ -1,7 +1,6 @@
 module UberBuilder
   module TemplatedMethods
     include ActionView::Helpers::TextHelper
-    include ActionView::Helpers::CaptureHelper
     
     def initialize(*args)
       super
@@ -70,10 +69,10 @@ module UberBuilder
     def manual(options = {}, &block)
       raise "manual expects a block" unless block_given?
       
-      content = with_layout(nil) {capture(&block)}
+      content = with_layout(nil) { @template.capture(&block)}
       tabular_options = extract_tabular_options( "", options )
       
-      concat( generic_field("", content, tabular_options), block.binding)
+      generic_field("", content, tabular_options)
     end
     alias :multiple :manual
     
@@ -108,12 +107,12 @@ module UberBuilder
       const_name = method.to_s.classify
       return false unless UberBuilder::Layouts.const_defined?(const_name)
       
-      self.class.class_eval <<-EOF
+      self.class.class_eval <<-EOF, __FILE__, __LINE__ + 1
         def #{method}(html_options = {}, &block)
           raise "expected a block" unless block_given?
           layout = UberBuilder::Layouts::#{const_name}.new(@template, @object_name, self)
-          content = with_layout(layout) { capture(&block) }
-          concat( layout.section(content, html_options), block.binding )
+          content = with_layout(layout) {  @template.capture(&block) }
+          layout.section(content, html_options)
         end
         
         public :#{method}
