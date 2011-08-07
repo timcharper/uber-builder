@@ -78,11 +78,11 @@ class UberBuilder::StaticBuilder
   def initialize(object_name, object, template, options, proc)
     @object_name, @object, @template, @options, @proc = object_name, object, template, options, proc
   end
-  
+
   def [](index)
     object.send(index)
   end
-  
+
 
   include ActionView::Helpers::AssetTagHelper
   include UberBuilder::StaticBuilderMethods
@@ -91,21 +91,21 @@ class UberBuilder::StaticBuilder
   def object
     @object ||= @template.instance_variable_get("@#{@object_name}")
   end
-  
-protected  
+
+protected
   def columns_hash
     @columns_hash ||= object.class.respond_to?(:columns_hash) && object.class.columns_hash
   end
-  
+
   def column_info(column)
     columns_hash && columns_hash[column.to_s]
   end
-  
+
   def column_type(column)
     ci = column_info(column)
     ci && ci.type
   end
-  
+
   def column_scale(column)
     ci = column_info(column)
     ci && ci.scale

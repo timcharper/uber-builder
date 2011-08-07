@@ -1,7 +1,7 @@
-require 'spec'
+require 'rspec'
 require "rubygems"
 require 'active_support'
-require "actionpack"
+require "action_pack"
 require "action_controller"
 require "action_view"
 require "ostruct"
@@ -9,7 +9,7 @@ require "ostruct"
 require File.dirname(__FILE__) + "/../init.rb"
 require File.dirname(__FILE__) + "/mock_model.rb"
 
-Spec::Runner.configure do |config|
+RSpec::Runner.configure do |config|
 end
 
 module CaptureStubMethods

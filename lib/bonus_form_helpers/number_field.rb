@@ -2,7 +2,8 @@ module ActionView
   module Helpers
     module FormHelper
       def number_field(object_name, method, options={})
-        InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_number_field_tag("text", options)
+
+        InstanceTag.new(object_name, method, self, options.delete(:object)).to_number_field_tag("text", options)
       end
     end
     
@@ -39,12 +40,12 @@ class ActionView::Helpers::InstanceTag
     add_default_name_and_id(options)
     
     # generate the hidden tag
-    output = tag_without_error_wrapping("input", {
+    output = tag("input", {
       "name" => options["name"],
       "value" => apply_precision(str_value, number_options),
       "type" => "hidden"
     })
-    output << tag_without_error_wrapping("input", options)
+    output << tag("input", options)
     
     wrap_with_errors_if_needed(output)
   end

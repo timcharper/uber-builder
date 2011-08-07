@@ -10,7 +10,7 @@ module UberBuilder
     end
     
     ( ActionView::Helpers::FormBuilder.field_helpers - %w(check_box radio_button radio_button_list hidden_field) + %w(time_select)).each do |selector| 
-      class_eval <<-END_SRC, __FILE__, __LINE__ 
+      class_eval <<-END_SRC, __FILE__, __LINE__ + 1
         def #{selector}(field, options = {})
           field = field.to_s
           tabular_options = extract_tabular_options(field, options)
@@ -24,7 +24,7 @@ module UberBuilder
     end
     
     %w(check_box radio_button).each do |selector|
-      class_eval <<-END_SRC, __FILE__, __LINE__
+      class_eval <<-END_SRC, __FILE__, __LINE__ + 1
         def #{selector}(field, options = {})
           field = field.to_s
           tabular_options = extract_tabular_options(field, options)
@@ -66,13 +66,17 @@ module UberBuilder
       @layout.field(fieldname, field_content, label_text, options)
     end
     
+    def extract_field_ids(content)
+      content.scan(/<input.*?id="#{@layout.object_name}_(.+?)"/).flatten
+    end
+
     def manual(options = {}, &block)
       raise "manual expects a block" unless block_given?
       
       content = with_layout(nil) { @template.capture(&block)}
       tabular_options = extract_tabular_options( "", options )
-      
-      generic_field("", content, tabular_options)
+      field_name = options[:field_name] || extract_field_ids(content).first || ""
+      generic_field(field_name, content, tabular_options)
     end
     alias :multiple :manual
     

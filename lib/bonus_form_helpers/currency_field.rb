@@ -2,7 +2,7 @@ module ActionView
   module Helpers
     module FormHelper
       def currency_field(object_name, method, options={})
-        InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_currency_field_tag("text", options)
+        InstanceTag.new(object_name, method, self, options.delete(:object)).to_currency_field_tag("text", options)
       end
     end
     
@@ -32,17 +32,17 @@ class ActionView::Helpers::InstanceTag
     options = DEFAULT_FIELD_OPTIONS.merge(options)
     options.delete("size")
     options["type"] = field_type
-    options["value"] ||= number_to_currency(str_value.to_s, currency_options)
+    options["value"] ||= str_value.blank? ? str_value : number_to_currency(str_value.to_s, currency_options)
     options["onchange"] = "$(this).previous().value = $F(this).replace(/[#{currency_options[:delimiter]}#{currency_options[:unit]}]/g, '').replace('#{currency_options[:separator]}', '.'); " + options[:onchange].to_s
     add_default_name_and_id(options)
     
     # generate the hidden tag
-    output = tag_without_error_wrapping("input", {
-      "name" => options["name"],
-      "value" => currency_options[:precision] ? number_with_precision(str_value, currency_options[:precision]) : str_value,
-      "type" => "hidden"
+    output = tag("input", {
+      "name"  => options["name"],
+      "value" =>  str_value.blank? ? str_value : "%0.#{currency_options[:precision] || 2}f" % str_value,
+      "type"  => "hidden"
     })
-    output << tag_without_error_wrapping("input", options)
+    output << tag("input", options)
     
     wrap_with_errors_if_needed(output)
   end

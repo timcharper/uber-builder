@@ -13,10 +13,10 @@ module UberBuilder
             options[:outer]
           ) 
         when options[:label] == :after
-          tr(td('') + td(field_content + " " + label(label_text, "#{@object_name}_#{field_name}", true)), options[:outer] )
+          tr(td('') + td(field_content + " " + label(label_text, "#{sanitized_object_name}_#{field_name}", true)), options[:outer] )
         else
           tr(
-            td(label(label_text, "#{@object_name}_#{field_name}"), :class => :label) + td(field_content),
+            td(label(label_text, "#{sanitized_object_name}_#{field_name}"), :class => :label) + td(field_content),
             options[:outer]
           ) 
         end

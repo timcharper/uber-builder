@@ -1,5 +1,7 @@
 require 'ostruct'
+
 class MutedOpenStruct < OpenStruct
+  attr_accessor :id, :type
   protected :id, :type
 end
 
